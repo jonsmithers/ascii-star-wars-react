@@ -1,12 +1,33 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import PropTypes from 'prop-types'
+import AsciiPlayer from './AsciiPlayer.js';
 import './App.css';
 
 class App extends Component {
+  state = {};
+  componentDidMount() {
+    console.time('fetch sw1.txt');
+    fetch('./sw1.txt').then(x => x.text()).then((txt) => {
+      console.timeEnd('fetch sw1.txt');
+      this.setState({txt});
+    });
+  }
   render() {
+    const { style } = this.props;
+    const { txt } = this.state;
     return (
       <div className="App">
-        <header className="App-header">
+        <div style={{
+          padding: '10px',
+          margin: '10px',
+          background: '#262626',
+          border: '1px dotted grey',
+          display: 'inline-block',
+        }}>
+          <AsciiPlayer txt={txt} startingFrameIndex={243} loop={true} style={{border: '1px solid white', padding: '10px'}}/>
+        </div>
+        {/*<header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
             Edit <code>src/App.js</code> and save to reload.
@@ -19,7 +40,7 @@ class App extends Component {
           >
             Learn React
           </a>
-        </header>
+        </header> */}
       </div>
     );
   }
