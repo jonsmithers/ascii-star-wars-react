@@ -64,7 +64,7 @@ class AsciiPlayer extends PureComponent {
     return (
       <pre className="movie-screen" style={{textAlign: 'left'}}>
         {/* give screen a fixed width of 67 monospace characters */}
-        <div style={{height: '0'}}>                                                                   </div>
+        <div style={{height: '0', visibility: 'hidden'}}>...................................................................</div>
 
         {frame.map((line, index) => (<span key={index} style={{minHeight: '1.25em', lineHeight: '1.25'}}>{line}<br/></span>))}
       </pre>
