@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const FRAME_RATE = 67; // 15 frame/sec
 const FRAME_HEIGHT = 14; // includes frameWait header
+const FRAME_WIDTH = 67;
 
 class AsciiPlayer extends PureComponent {
   static propTypes = {
@@ -32,8 +33,8 @@ class AsciiPlayer extends PureComponent {
       });
       this.ticker = setInterval(() => {
         this.setState(({lines, frameIndex, frameWait}) => {
-          const { loop } = this.props;
           // console.log('tick', {frameIndex, frameWait});
+          const { loop } = this.props;
           if (frameWait) {
             return {frameWait: Math.max(frameWait-1, 0)}
           }
@@ -55,17 +56,26 @@ class AsciiPlayer extends PureComponent {
   };
   render() {
     const { lines, frameIndex } = this.state;
+
+    /* give screen a fixed width of FRAME_WIDTH monospace characters */
+    const fixedWidthFiller = (
+      <div style={{height: '0', visibility: 'hidden'}}>
+        {new Array(FRAME_WIDTH).fill('.').join('')}
+      </div>
+    );
+
     if (frameIndex == null) {
       return (
-        <div> nothing </div>
+        <pre style={{height: `calc(1.25em * ${FRAME_HEIGHT-1})`}}>
+          {fixedWidthFiller}
+          insert tape
+        </pre>
       );
     }
     let frame = lines.slice(frameIndex*FRAME_HEIGHT+1, (1+frameIndex)*FRAME_HEIGHT);
     return (
       <pre className="movie-screen" style={{textAlign: 'left'}}>
-        {/* give screen a fixed width of 67 monospace characters */}
-        <div style={{height: '0', visibility: 'hidden'}}>...................................................................</div>
-
+        {fixedWidthFiller}
         {frame.map((line, index) => (<span key={index} style={{minHeight: '1.25em', lineHeight: '1.25'}}>{line}<br/></span>))}
       </pre>
     );
