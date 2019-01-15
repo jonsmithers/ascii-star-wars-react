@@ -15,13 +15,7 @@ class App extends Component {
     const { txt } = this.state;
     return (
       <div className="App">
-        <div style={{
-          padding: '10px',
-          margin: '10px',
-          background: '#262626',
-          border: '1px dotted grey',
-          display: 'inline-block',
-        }}>
+        <div className="ascii-player-container">
           <AsciiPlayer txt={txt} startingFrameIndex={0 /* 243 */} loop={true} style={{border: '1px solid white', padding: '10px'}}/>
         </div>
       </div>

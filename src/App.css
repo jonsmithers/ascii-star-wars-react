@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+.ascii-player-container {
+  display: inline-block;
+}
+
 body {
   background: black;
   color: white;
